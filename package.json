@@ -1,0 +1,8 @@
+{
+  "name": "healthcost",
+  "version": "0.0.1",
+  "dependencies": {
+    "brain.js": "*",
+    "csv-parse": "^3.0.0"
+  }
+}
