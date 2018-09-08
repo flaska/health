@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "@tensorflow/tfjs": "^0.12.7",
+    "@tensorflow/tfjs-node": "*",
     "brain.js": "*",
     "csv-parse": "^3.0.0"
   }
