@@ -1,4 +1,5 @@
-const brain = require('brain.js'),
+const tf = require('@tensorflow/tfjs');
+const
     parse = require('csv-parse/lib/sync'),
     fs = require('fs')
 ;
@@ -24,13 +25,13 @@ const records = parse(csvContent, {columns: true});
 
 function transformRecord(record){
     return {
-      input: [
-          parseFloat(record.age),
-          record.sex==='male'?1:0,
-          parseFloat(record.bmi),
-          record.smoker==='yes'?1:0
-      ],
-      output: [parseFloat(record.charges)]
+        input: [
+            parseFloat(record.age),
+            record.sex==='male'?1:0,
+            parseFloat(record.bmi),
+            record.smoker==='yes'?1:0
+        ],
+        output: [parseFloat(record.charges)]
     };
 }
 
