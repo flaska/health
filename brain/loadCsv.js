@@ -1,13 +1,12 @@
 const parse = require('csv-parse/lib/sync'),
-    fs = require('fs'),
-    normalizer = require('./normalizer')
+    fs = require('fs')
 ;
 
 /* MAPPING
-* 1) age
-* 2) sex
-* 3) bmi
-* 4) smoker
+* 0) age
+* 1) sex
+* 2) bmi
+* 3) smoker
 * */
 
 const csvContent = fs.readFileSync('./insurance.csv');
@@ -25,13 +24,7 @@ function transformRecord(record){
     };
 }
 
-const trainingSet = records.map(record=>transformRecord(record));
-
-normalizer.normalize(trainingSet);
+exports.trainingSet = records.map(record=>transformRecord(record));
 
 
-const testSet = trainingSet.splice(1100, 500);
-
-exports.trainingSet = trainingSet;
-exports.testSet = testSet;
 

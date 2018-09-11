@@ -1,5 +1,7 @@
 const brain = require('brain.js'),
-    data = require('./loadCsv')
+    data = require('./loadCsv'),
+    normalizer = require('./normalizer'),
+    Normalizer = normalizer.Normalizer
 ;
 
 const brainConfig = {
@@ -10,13 +12,26 @@ const brainConfig = {
 
 const net = new brain.NeuralNetwork(brainConfig);
 
-const trainingSet = data.testSet;
-const testSet = data.testSet;
+var trainingSet = data.trainingSet;
+
+trainingSet = normalizer.normalize(trainingSet);
+const testSet = trainingSet.splice(1100, 500);
 
 net.train(trainingSet);
 
+
 testSet.forEach(set=>{
     const output = net.run(set.input);
-    console.log('Input: ' + JSON.stringify(set.input));
-    console.log('Output: ' + JSON.stringify(output));
+
+    const realCost = Normalizer.denormalizeUnit('charges', set.output[0]);
+    const predictedCost = Normalizer.denormalizeUnit('charges', output[0]);
+
+    console.log('Input: ' + JSON.stringify([
+        Normalizer.denormalizeUnit('age', set.input[0]),
+        set.input[1],
+        Normalizer.denormalizeUnit('bmi', set.input[2]),
+        set.input[3]
+    ]));
+    console.log('Real cost: ' + realCost);
+    console.log('Predicted cost: ' + predictedCost);
 });
