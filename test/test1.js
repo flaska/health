@@ -34,8 +34,27 @@ function transformRecord(record){
     };
 }
 
+const Normalizer  = function normalizer(){
+    var normalizier = this;
+    this.ageQ = 1;
+    this.bmiQ = 1;
+    this.chargesQ = 1;
+    this.findQuotient = function(unitName, arrayOfValues){
+        let max = Math.max(...arrayOfValues);
+        normalizier[unitName + 'Q'] = 1 / max;
+    };
+    this.normalizeUnit = function(unitName, originalValue){
+        return originalValue * normalizier[unitName + 'Q'];
+    };
+    this.denormalizeUnit = function(unitName, normalizedValue){
+        return normalizedValue / normalizier[unitName + 'Q'];
+    };
+};
+
 const trainingSet = records.map(record=>transformRecord(record));
 const testSet = trainingSet.splice(1100, 500);
+
+
 
 
 net.train(trainingSet);
